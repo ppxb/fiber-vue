@@ -24,9 +24,24 @@ export default defineConfig({
     alias: [
       {
         find: '@',
-        replacement: resolve(__dirname, '../src')
+        replacement: resolve(__dirname, './src')
+      },
+      {
+        find: 'assets',
+        replacement: resolve(__dirname, './src/assets')
       }
     ],
     extensions: ['.ts', '.js']
+  },
+  css: {
+    preprocessorOptions: {
+      less: {
+        modifyVars: {
+          hack: `true;@import (reference) "${resolve(
+            'src/assets/style/breakpoint.less'
+          )}";`
+        }
+      }
+    }
   }
 })
