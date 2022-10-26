@@ -1,4 +1,5 @@
 import { createRouter, createWebHashHistory, RouteRecordRaw } from 'vue-router'
+import appRoutes from './routes'
 
 const routes: RouteRecordRaw[] = [
   { path: '', redirect: 'login' },
@@ -9,7 +10,8 @@ const routes: RouteRecordRaw[] = [
     meta: {
       requireAuth: false
     }
-  }
+  },
+  ...appRoutes
 ]
 
 const router = createRouter({

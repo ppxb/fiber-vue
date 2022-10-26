@@ -1,4 +1,4 @@
-import { LoginData } from '@/api/user'
+import { getMenuList, LoginData } from '@/api/user'
 import { defineStore } from 'pinia'
 import { UserState } from './types'
 import { login as userLogin } from '@/api/user'
@@ -10,7 +10,8 @@ const useUserStore = defineStore('user', {
     name: undefined,
     avatar: undefined,
     phone: undefined,
-    role: ''
+    role: '',
+    menu: []
   }),
 
   getters: {
@@ -23,6 +24,8 @@ const useUserStore = defineStore('user', {
     async login(loginForm: LoginData) {
       try {
         const res = await userLogin(loginForm)
+        const { data } = await getMenuList()
+        this.menu = data
         setToken(res.data.token)
       } catch (err) {
         clearToken()

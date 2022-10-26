@@ -97,11 +97,11 @@
           }
         })
         Message.success('登录成功')
+
         const { rememberPassword } = loginConfig.value
         const { mobile, password } = values
-        loginConfig.value.mobile = mobile
-        loginConfig.value.password = password
-        loginConfig.value.rememberPassword = rememberPassword
+        loginConfig.value.mobile = rememberPassword ? mobile : ''
+        loginConfig.value.password = rememberPassword ? password : ''
       } catch (err) {
         errorMessage.value = (err as Error).message
       } finally {

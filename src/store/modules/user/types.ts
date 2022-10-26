@@ -1,3 +1,5 @@
+import { RouteRecordNormalized } from 'vue-router'
+
 export type RoleType = '' | '*' | 'admin' | 'user'
 
 export interface UserState {
@@ -6,4 +8,5 @@ export interface UserState {
   avatar?: string
   phone?: string
   role: RoleType
+  menu: RouteRecordNormalized[]
 }
