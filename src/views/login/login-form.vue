@@ -54,10 +54,14 @@
 <script lang="ts" setup>
   import { useStorage } from '@vueuse/core'
   import { reactive, ref } from 'vue'
+  import { Message } from '@arco-design/web-vue'
   import { ValidatedError } from '@arco-design/web-vue/es/form/interface'
   import useLoading from '@/hooks/loading'
   import { useUserStore } from '@/store'
+  import { LoginData } from '@/api/user'
+  import { useRouter } from 'vue-router'
 
+  const router = useRouter()
   const userStore = useUserStore()
   const { loading, setLoading } = useLoading()
 
@@ -85,6 +89,19 @@
       setLoading(true)
       try {
         await userStore.login(values as LoginData)
+        const { redirect, ...othersQuery } = router.currentRoute.value.query
+        router.push({
+          name: (redirect as string) || 'Workplace',
+          query: {
+            ...othersQuery
+          }
+        })
+        Message.success('登录成功')
+        const { rememberPassword } = loginConfig.value
+        const { mobile, password } = values
+        loginConfig.value.mobile = mobile
+        loginConfig.value.password = password
+        loginConfig.value.rememberPassword = rememberPassword
       } catch (err) {
         errorMessage.value = (err as Error).message
       } finally {
