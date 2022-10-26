@@ -7,8 +7,18 @@ export {}
 
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
+    AButton: typeof import('@arco-design/web-vue')['Button']
+    ACheckbox: typeof import('@arco-design/web-vue')['Checkbox']
     AConfigProvider: typeof import('@arco-design/web-vue')['ConfigProvider']
-    HelloWorld: typeof import('./src/components/HelloWorld.vue')['default']
+    AForm: typeof import('@arco-design/web-vue')['Form']
+    AFormItem: typeof import('@arco-design/web-vue')['FormItem']
+    AInput: typeof import('@arco-design/web-vue')['Input']
+    AInputPassword: typeof import('@arco-design/web-vue')['InputPassword']
+    ALayoutFooter: typeof import('@arco-design/web-vue')['LayoutFooter']
+    ALink: typeof import('@arco-design/web-vue')['Link']
+    ASapce: typeof import('@arco-design/web-vue')['Sapce']
+    ASpace: typeof import('@arco-design/web-vue')['Space']
+    Footer: typeof import('./src/components/footer/index.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
   }

@@ -7,8 +7,18 @@
       />
       <div class="logo-text">Fiber</div>
     </div>
+    <div class="content">
+      <LoginForm />
+      <div class="footer">
+        <Footer />
+      </div>
+    </div>
   </div>
 </template>
+
+<script lang="ts" setup>
+  import LoginForm from './login-form.vue'
+</script>
 
 <style lang="less" scoped>
   .container {
@@ -28,6 +38,20 @@
         color: var(--color-fill-1);
         font-size: 20px;
       }
+    }
+
+    .content {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .footer {
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      width: 100%;
     }
   }
 </style>
