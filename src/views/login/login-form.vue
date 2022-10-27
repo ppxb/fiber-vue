@@ -31,13 +31,6 @@
       </a-form-item>
       <a-space :size="16" direction="vertical">
         <div class="login-form-password-actions">
-          <a-checkbox
-            checked="rememberPassword"
-            :model-value="loginConfig.rememberPassword"
-            @change="setRememberPassword"
-          >
-            记住密码
-          </a-checkbox>
           <a-link>忘记密码</a-link>
         </div>
         <a-button type="primary" html-type="submit" long :loading="loading">
@@ -58,23 +51,17 @@
   import { ValidatedError } from '@arco-design/web-vue/es/form/interface'
   import useLoading from '@/hooks/loading'
   import { useUserStore } from '@/store'
-  import { LoginData } from '@/api/user'
   import { useRouter } from 'vue-router'
+  import { LoginData } from '@/api/user/types'
 
   const router = useRouter()
   const userStore = useUserStore()
   const { loading, setLoading } = useLoading()
 
   const errorMessage = ref('')
-  const loginConfig = useStorage('login-config', {
-    rememberPassword: true,
+  const userInfo = reactive({
     mobile: '',
     password: ''
-  })
-
-  const userInfo = reactive({
-    mobile: loginConfig.value.mobile,
-    password: loginConfig.value.password
   })
 
   const handleSubmit = async ({
@@ -89,29 +76,14 @@
       setLoading(true)
       try {
         await userStore.login(values as LoginData)
-        const { redirect, ...othersQuery } = router.currentRoute.value.query
-        router.push({
-          name: (redirect as string) || 'Workplace',
-          query: {
-            ...othersQuery
-          }
-        })
+        router.push('/')
         Message.success('登录成功')
-
-        const { rememberPassword } = loginConfig.value
-        const { mobile, password } = values
-        loginConfig.value.mobile = rememberPassword ? mobile : ''
-        loginConfig.value.password = rememberPassword ? password : ''
       } catch (err) {
         errorMessage.value = (err as Error).message
       } finally {
         setLoading(false)
       }
     }
-  }
-
-  const setRememberPassword = (value: boolean) => {
-    loginConfig.value.rememberPassword = value
   }
 </script>
 
