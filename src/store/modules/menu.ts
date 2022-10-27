@@ -25,6 +25,30 @@ const useMenuStore = defineStore('menu', {
           path: '/dashboard/workspace',
           keepAlive: false,
           hidden: false
+        },
+        {
+          icon: 'menu-asset',
+          id: 'BDGL',
+          name: '资产',
+          path: '/asset',
+          keepAlive: true,
+          hidden: false,
+          children: [
+            {
+              id: 'JCBD',
+              name: '列表',
+              path: '/asset/list',
+              keepAlive: false,
+              hidden: false
+            },
+            {
+              id: 'FBBD',
+              name: '盘点',
+              path: '/asset/check',
+              keepAlive: false,
+              hidden: false
+            }
+          ]
         }
       ]
     }
