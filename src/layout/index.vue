@@ -16,7 +16,6 @@
 
 <style lang="less" scoped>
   .layout {
-    height: 100%;
-    display: flex;
+    height: 100vh;
   }
 </style>

@@ -1,18 +1,16 @@
 <template>
   <div class="container">
-    <div class="logo">
-      <img
-        alt="logo"
-        src="//p3-armor.byteimg.com/tos-cn-i-49unhts6dw/dfdba5317c0c20ce20e64fac803d52bc.svg~tplv-49unhts6dw-image.image"
-      />
-      <div class="logo-text">Fiber</div>
-    </div>
-    <div class="content">
-      <LoginForm />
-      <div class="footer">
-        <Footer />
+    <div class="container-content">
+      <div class="container-logo">
+        <div class="container-logo-slogan">
+          <div class="highlight">F</div>
+          <div>iber</div>
+        </div>
+        <div class="container-logo-text">N-Gen 智慧化办公系统</div>
       </div>
+      <LoginForm />
     </div>
+    <Footer />
   </div>
 </template>
 
@@ -23,35 +21,41 @@
 <style lang="less" scoped>
   .container {
     display: flex;
+    flex-direction: column;
     height: 100vh;
+    align-items: center;
+    justify-content: center;
 
-    .logo {
-      position: fixed;
-      top: 24px;
-      left: 24px;
-      z-index: 1;
-      display: inline-flex;
-      align-items: center;
+    &-content {
+      display: flex;
+    }
+
+    &-logo {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      margin-right: 4rem;
+      color: #313131;
 
       &-text {
-        margin: 0 4px;
-        color: var(--color-fill-1);
-        font-size: 20px;
+        font-size: 2em;
+        font-weight: 700;
       }
-    }
 
-    .content {
-      width: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
+      &-slogan {
+        display: flex;
+        font-size: 2em;
+        font-weight: 700;
+        align-items: center;
+        margin-bottom: 12px;
 
-    .footer {
-      position: absolute;
-      right: 0;
-      bottom: 0;
-      width: 100%;
+        .highlight {
+          background-color: #e7f6df;
+          padding: 0px 10px;
+          border-radius: 12px;
+          margin-right: 4px;
+        }
+      }
     }
   }
 </style>

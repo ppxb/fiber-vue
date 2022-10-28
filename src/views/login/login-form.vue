@@ -1,46 +1,50 @@
 <template>
   <div class="login-form-wrapper">
-    <div class="login-form-title">登录Fiber</div>
-    <div class="login-form-sub-title">可以使用Fiber SSO 实现全站统一登录</div>
-    <a-form
-      ref="loginForm"
-      :model="userInfo"
-      class="login-form"
-      layout="vertical"
-      @submit="handleSubmit"
-    >
-      <a-form-item
-        field="mobile"
-        :rules="[{ required: true, message: '手机号码不能为空' }]"
-        :validate-trigger="['change', 'blur']"
-        hide-label
-      >
-        <a-input v-model="userInfo.mobile" placeholder="请输入手机号码" />
-      </a-form-item>
-      <a-form-item
-        filed="password"
-        :rule="[{ required: true, message: '密码不能为空' }]"
-        :validate-trigger="['change', 'blur']"
-        hide-label
-      >
-        <a-input-password
-          v-model="userInfo.password"
-          placeholder="请输入密码"
-          allow-clear
-        />
-      </a-form-item>
-      <a-space :size="16" direction="vertical">
-        <div class="login-form-password-actions">
-          <a-link>忘记密码</a-link>
+    <template v-if="!userInfo.name">
+      <input
+        class="input"
+        type="phone"
+        placeholder="请输入手机号码"
+        v-model="userLoginReq.mobile"
+        v-on:input="handleMobileChange"
+      />
+      <transition name="fade">
+        <div class="login-button" v-show="showLoginBtn" @click="handleSubmit">
+          <IconLoading v-if="loading" />
+          <IconRight v-else />
         </div>
-        <a-button type="primary" html-type="submit" long :loading="loading">
-          登录
-        </a-button>
-        <a-button type="text" long class="login-form-register-btn">
-          注册账号
-        </a-button>
-      </a-space>
-    </a-form>
+      </transition>
+    </template>
+    <template v-else>
+      <div class="password-wrapper">
+        <div class="userinfo">
+          <img :src="userInfo.avatar" alt="" class="avatar" />
+          <div>
+            <span class="userinfo-name">{{ userInfo.name }}</span
+            >，欢迎回来。
+          </div>
+        </div>
+        <div class="password-input-wrapper">
+          <input
+            class="input"
+            type="password"
+            placeholder="请输入密码"
+            v-model="userLoginReq.password"
+            v-on:input="handlePasswordChange"
+          />
+          <transition name="fade">
+            <div
+              class="login-button"
+              v-show="showLoginBtn"
+              @click="handleSubmit"
+            >
+              <IconLoading v-if="loading" />
+              <IconRight v-else />
+            </div>
+          </transition>
+        </div>
+      </div>
+    </template>
   </div>
 </template>
 
@@ -48,69 +52,133 @@
   import { useStorage } from '@vueuse/core'
   import { reactive, ref } from 'vue'
   import { Message } from '@arco-design/web-vue'
-  import { ValidatedError } from '@arco-design/web-vue/es/form/interface'
   import useLoading from '@/hooks/loading'
   import { useUserStore } from '@/store'
   import { useRouter } from 'vue-router'
-  import { LoginData } from '@/api/user/types'
+  import { IconRight, IconLoading } from '@arco-design/web-vue/es/icon'
+  import { check } from '@/api/user'
 
   const router = useRouter()
   const userStore = useUserStore()
   const { loading, setLoading } = useLoading()
 
+  const showLoginBtn = ref(false)
   const errorMessage = ref('')
-  const userInfo = reactive({
+  const userLoginReq = reactive({
     mobile: '',
     password: ''
   })
+  const userInfo = reactive({
+    avatar: '',
+    name: ''
+  })
 
-  const handleSubmit = async ({
-    errors,
-    values
-  }: {
-    errors: Record<string, ValidatedError> | undefined
-    values: Record<string, any>
-  }) => {
+  const handleMobileChange = () => {
+    if (userLoginReq.mobile.length === 11) {
+      showLoginBtn.value = true
+    } else {
+      showLoginBtn.value = false
+    }
+  }
+
+  const handlePasswordChange = () => {
+    if (userLoginReq.password.length) {
+      showLoginBtn.value = true
+    } else {
+      showLoginBtn.value = false
+    }
+  }
+
+  const handleSubmit = async () => {
     if (loading.value) return
-    if (!errors) {
+    try {
       setLoading(true)
-      try {
-        await userStore.login(values as LoginData)
+      if (userLoginReq.mobile && userLoginReq.password != '') {
+        await userStore.login(userLoginReq)
         router.push('/')
         Message.success('登录成功')
-      } catch (err) {
-        errorMessage.value = (err as Error).message
-      } finally {
-        setLoading(false)
+      } else {
+        const userCheckedInfo = await check(userLoginReq.mobile)
+        userInfo.avatar = userCheckedInfo.data.userInfo.avatar
+        userInfo.name = userCheckedInfo.data.userInfo.name
       }
+      showLoginBtn.value = false
+    } finally {
+      setLoading(false)
     }
   }
 </script>
 
 <style lang="less" scoped>
+  .avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 10px;
+    margin-right: 10px;
+  }
+
+  .password-wrapper {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .userinfo {
+    display: flex;
+    align-items: center;
+    font-size: 1.5em;
+    margin-bottom: 12px;
+  }
+
+  .userinfo-name {
+    font-weight: 700;
+  }
+
+  .password-input-wrapper {
+    display: flex;
+  }
   .login-form {
     &-wrapper {
       width: 320px;
-    }
-
-    &-title {
-      color: var(--color-text-1);
-      font-weight: 700;
-      font-size: 32px;
-      margin-bottom: 4px;
-    }
-
-    &-sub-title {
-      color: var(--color-text-3);
-    }
-
-    &-password-actions {
       display: flex;
-      justify-content: space-between;
-    }
+      align-items: center;
 
-    &-register-btn {
-      color: var(--color-text-3) !important;
+      .input {
+        border: none;
+        padding: 10px 12px;
+        outline: none;
+        background-color: #f8f8f8;
+        color: #313131;
+        font-size: 1.125em;
+        font-weight: 500;
+        border-radius: 12px;
+        transition: all 0.25s ease-in;
+
+        &:focus {
+          background-color: #eeeeee;
+        }
+      }
+
+      .login-button {
+        padding: 10px 12px;
+        background-color: #f8f8f8;
+        border-radius: 12px;
+        margin-left: 12px;
+        transition: all 0.25s ease-in;
+
+        &:hover {
+          cursor: pointer;
+          background-color: #eeeeee;
+        }
+      }
     }
+  }
+
+  .fade-enter-active,
+  .fade-leave-active {
+    transition: all 0.25s ease-in;
+  }
+  .fade-enter-from,
+  .fade-leave-to {
+    opacity: 0;
   }
 </style>

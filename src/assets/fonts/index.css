@@ -1,0 +1,15 @@
+@import url('https://fonts.googlefonts.cn/css?family=Poppins:400,500,600,700');
+
+@font-face {
+  font-family: 'SF Pro SC';
+  font-style: normal;
+  font-weight: 600;
+  src: local('☺'), url('./PingFangSC-Semibold.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'SF Pro SC';
+  font-style: normal;
+  font-weight: 400;
+  src: local('☺'), url('./PingFangSC-Regular.woff2') format('woff2');
+}
