@@ -6,7 +6,7 @@
           <div class="highlight">F</div>
           <div>iber</div>
         </div>
-        <div class="container-logo-text">N-Gen 智慧化办公系统</div>
+        <div class="container-logo-text">N-Gen 模块化智慧办公系统</div>
       </div>
       <LoginForm />
     </div>
