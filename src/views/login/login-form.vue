@@ -1,19 +1,31 @@
 <template>
   <div class="login-form-wrapper">
     <template v-if="!userInfo.name">
-      <input
-        class="input"
-        type="phone"
-        placeholder="请输入手机号码"
-        v-model="userLoginReq.mobile"
-        v-on:input="handleMobileChange"
-      />
-      <transition name="fade">
-        <div class="login-button" v-show="showLoginBtn" @click="handleSubmit">
-          <IconLoading v-if="loading" />
-          <IconRight v-else />
+      <div class="password-wrapper">
+        <div class="userinfo">
+          <div>
+            <span class="userinfo-name">登录</span>
+          </div>
         </div>
-      </transition>
+        <div class="password-input-wrapper">
+          <input
+            type="phone"
+            placeholder="请输入手机号"
+            v-model="userLoginReq.mobile"
+            v-on:input="handleMobileChange"
+          />
+          <transition name="fade">
+            <div
+              class="login-button"
+              v-show="showLoginBtn"
+              @click="handleSubmit"
+            >
+              <IconLoading v-if="loading" />
+              <IconRight v-else />
+            </div>
+          </transition>
+        </div>
+      </div>
     </template>
     <template v-else>
       <div class="password-wrapper">
@@ -26,7 +38,6 @@
         </div>
         <div class="password-input-wrapper">
           <input
-            class="input"
             type="password"
             placeholder="请输入密码"
             v-model="userLoginReq.password"
@@ -138,18 +149,18 @@
   }
   .login-form {
     &-wrapper {
-      width: 320px;
+      width: 300px;
       display: flex;
       align-items: center;
 
-      .input {
+      input {
         border: none;
-        padding: 10px 12px;
+        padding: 10px 14px;
         outline: none;
         background-color: #f8f8f8;
         color: #313131;
         font-size: 1.125em;
-        font-weight: 500;
+        font-weight: 600;
         border-radius: 12px;
         transition: all 0.25s ease-in;
 
