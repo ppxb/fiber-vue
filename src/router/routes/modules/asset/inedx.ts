@@ -6,7 +6,7 @@ const assetRoutes: RouteRecordRaw[] = [
   {
     path: '/asset',
     name: 'Asset',
-    // component: layout,
+    component: layout,
     redirect: '/asset/list',
     meta: {
       title: '资产'
@@ -32,4 +32,7 @@ const assetRoutes: RouteRecordRaw[] = [
   }
 ]
 
-export default assetRoutes
+export default {
+  sort: 2,
+  routes: assetRoutes
+}

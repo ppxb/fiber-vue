@@ -119,12 +119,13 @@
       setLoading(true)
       if (userLoginReq.mobile && userLoginReq.password != '') {
         await userStore.login(userLoginReq)
+        userStore.setUserMenuRoutes()
         router.push('/')
         // Message.success('登录成功')
       } else {
         const userCheckedInfo = await check(userLoginReq.mobile)
-        userInfo.avatar = userCheckedInfo.data.data.userInfo.avatar
-        userInfo.name = userCheckedInfo.data.data.userInfo.name
+        userInfo.avatar = userCheckedInfo.data.userInfo.avatar
+        userInfo.name = userCheckedInfo.data.userInfo.name
       }
       showLoginBtn.value = false
     } finally {

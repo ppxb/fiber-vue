@@ -5,3 +5,9 @@ declare module '*.vue' {
   const component: DefineComponent<{}, {}, any>
   export default component
 }
+
+declare interface Recordable {
+  [key: string]: any
+}
+
+declare type Nullable<T> = T | null

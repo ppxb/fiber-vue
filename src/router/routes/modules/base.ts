@@ -3,8 +3,8 @@ import type { RouteRecordRaw } from 'vue-router'
 const baseRoutes: RouteRecordRaw[] = [
   {
     path: '/',
-    name: 'Workspace',
-    redirect: '/work/space'
+    name: 'Root',
+    redirect: '/dashboard/workspace'
   },
   {
     path: '/login',

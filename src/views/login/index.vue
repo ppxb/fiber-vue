@@ -7,6 +7,7 @@
           <div>iber</div>
         </div>
         <div class="font-700 text-3xl">N-Gen 模块化智慧办公系统</div>
+        <div i-carbon-language />
       </div>
       <LoginForm />
     </div>

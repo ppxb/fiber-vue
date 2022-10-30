@@ -2,36 +2,36 @@ import { defineStore } from 'pinia'
 import { login as userLogin, logout as userLogout } from '@/api/user'
 import { clearToken, setToken } from '@/utils/auth'
 import { LoginData, UserInfo } from '@/api/user/types'
+import type { RouteRecordRaw } from 'vue-router'
+import { useStorage } from '@vueuse/core'
 
 interface UserState {
-  userInfo: UserInfo
+  userInfo: Nullable<Recordable>
+  token: Nullable<string>
+  menuRoutes: RouteRecordRaw[]
 }
 
-const useUserStore = defineStore('user', {
+const menuRoutes: any = import.meta.glob('../../router/routes/modules/*/*.ts', {
+  eager: true
+})
+
+const useUserStore = defineStore({
+  id: 'user',
   state: (): UserState => {
     return {
-      userInfo: JSON.parse(localStorage.getItem('UserInfo') as string) || {
-        id: 0,
-        name: '',
-        avatar: '',
-        phone: '',
-        role: ''
-      }
+      userInfo: useStorage('userInfo', null, sessionStorage).value,
+      token: useStorage('token', null, sessionStorage).value,
+      menuRoutes: useStorage('userRoutes', [], sessionStorage).value
     }
   },
-  getters: {
-    // userInfo(state: UserState): UserState {
-    //   return { ...state }
-    // }
-  },
-
+  getters: {},
   actions: {
     async login(loginForm: LoginData) {
       try {
         const res = await userLogin(loginForm)
         setToken(res.data.token)
         this.userInfo = res.data.userInfo
-        localStorage.setItem('UserInfo', JSON.stringify(this.userInfo))
+        localStorage.setItem('userInfo', JSON.stringify(this.userInfo))
       } catch (err) {
         clearToken()
         throw err
@@ -44,6 +44,22 @@ const useUserStore = defineStore('user', {
       } catch (err) {
         return err
       }
+    },
+    setUserMenuRoutes() {
+      const userRoutes = useStorage<RouteRecordRaw[]>(
+        'userRoutes',
+        [],
+        sessionStorage
+      )
+      const routeModules = Object.keys(menuRoutes).reduce((routes, key) => {
+        const module = menuRoutes[key]?.default || {}
+        routes.push(module)
+        return routes
+      }, [] as any)
+      routeModules.sort((p: any, n: any) => p.sort - n.sort)
+      const routes = routeModules.map((it: any) => it.routes).flat()
+      userRoutes.value = routes
+      this.menuRoutes = routes
     }
   }
 })

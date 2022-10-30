@@ -6,7 +6,7 @@ import store from './store'
 import 'uno.css'
 
 import './mock'
-// import '@/api/interceptor'
+import '@/api/interceptor'
 
 import '@/assets/style/global.css'
 
