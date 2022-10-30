@@ -7,8 +7,6 @@ export {}
 
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
-    AConfigProvider: typeof import('@arco-design/web-vue')['ConfigProvider']
-    ALayoutFooter: typeof import('@arco-design/web-vue')['LayoutFooter']
     Footer: typeof import('./src/components/footer/index.vue')['default']
     Menu: typeof import('./src/components/menu/index.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']

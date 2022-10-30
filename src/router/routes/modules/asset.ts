@@ -1,27 +1,35 @@
-import { AppRouteRecordRaw } from '../types'
+import type { RouteRecordRaw } from 'vue-router'
 
 const layout = () => import('@/layout/index.vue')
 
-const asset: AppRouteRecordRaw = {
-  component: layout,
-  children: [
-    {
-      path: '/asset/list',
-      name: 'AssetList',
-      component: () => import('@/views/asset/list/index.vue'),
-      meta: {
-        title: '工作空间'
-      }
+const assetRoutes: RouteRecordRaw[] = [
+  {
+    path: '/asset',
+    name: 'Asset',
+    // component: layout,
+    redirect: '/asset/list',
+    meta: {
+      title: '资产'
     },
-    {
-      path: '/asset/check',
-      name: 'AssetCheck',
-      component: () => import('@/views/asset/check/index.vue'),
-      meta: {
-        title: '工作空间'
+    children: [
+      {
+        path: 'list',
+        name: 'assetList',
+        component: () => import('@/views/asset/list/index.vue'),
+        meta: {
+          title: '列表'
+        }
+      },
+      {
+        path: 'check',
+        name: 'assetCheck',
+        component: () => import('@/views/asset/check/index.vue'),
+        meta: {
+          title: '盘点'
+        }
       }
-    }
-  ]
-}
+    ]
+  }
+]
 
-export default asset
+export default assetRoutes

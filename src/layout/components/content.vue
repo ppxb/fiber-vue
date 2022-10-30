@@ -10,7 +10,7 @@
   </a-layout>
 </template>
 
-<style lang="less" scoped>
+<style scoped>
   .main {
     width: 100%;
     height: 100%;

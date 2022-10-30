@@ -1,12 +1,12 @@
 <template>
-  <div class="container">
-    <div class="container-content">
-      <div class="container-logo">
-        <div class="container-logo-slogan">
-          <div class="highlight">F</div>
+  <div class="flex flex-col h-screen items-center justify-center">
+    <div class="flex">
+      <div class="flex flex-col items-end mr-8 color-[#333]">
+        <div class="flex text-3xl font-700 items-center mb-3">
+          <div class="bg-[#e7f6df] px-[10px] rounded-[12px] mr-[4px]">F</div>
           <div>iber</div>
         </div>
-        <div class="container-logo-text">N-Gen 模块化智慧办公系统</div>
+        <div class="font-700 text-3xl">N-Gen 模块化智慧办公系统</div>
       </div>
       <LoginForm />
     </div>
@@ -17,45 +17,3 @@
 <script lang="ts" setup>
   import LoginForm from './login-form.vue'
 </script>
-
-<style lang="less" scoped>
-  .container {
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
-    align-items: center;
-    justify-content: center;
-
-    &-content {
-      display: flex;
-    }
-
-    &-logo {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-end;
-      margin-right: 4rem;
-      color: #313131;
-
-      &-text {
-        font-size: 2em;
-        font-weight: 700;
-      }
-
-      &-slogan {
-        display: flex;
-        font-size: 2em;
-        font-weight: 700;
-        align-items: center;
-        margin-bottom: 12px;
-
-        .highlight {
-          background-color: #e7f6df;
-          padding: 0px 10px;
-          border-radius: 12px;
-          margin-right: 4px;
-        }
-      }
-    }
-  }
-</style>
