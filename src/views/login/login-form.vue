@@ -18,12 +18,16 @@
           />
           <transition name="fade">
             <div
-              class="px-3 py-4 bg-light-300 ml-3 transition-all"
+              class="flex items-center justify-center bg-light-300 ml-3 transition-all px-2 rounded-[10px] hover:bg-[#eee] hover:cursor-pointer"
               v-show="showLoginBtn"
               @click="handleSubmit"
             >
-              <!-- <IconLoading v-if="loading" />
-              <IconRight v-else /> -->
+              <n-spin v-if="loading">
+                <template #icon>
+                  <n-icon size="30" :component="Reload" color="#333" />
+                </template>
+              </n-spin>
+              <n-icon v-else size="30" :component="ArrowForward" />
             </div>
           </transition>
         </div>
@@ -52,12 +56,16 @@
           />
           <transition name="fade">
             <div
-              class="px-3 py-4 bg-light-300 ml-3 transition-all"
+              class="flex items-center justify-center bg-light-300 ml-3 transition-all px-2 rounded-[10px] hover:bg-[#eee] hover:cursor-pointer"
               v-show="showLoginBtn"
               @click="handleSubmit"
             >
-              <!-- <IconLoading v-if="loading" />
-              <IconRight v-else /> -->
+              <n-spin v-if="loading">
+                <template #icon>
+                  <n-icon size="30" :component="Reload" color="#333" />
+                </template>
+              </n-spin>
+              <n-icon v-else size="30" :component="ArrowForward" />
             </div>
           </transition>
         </div>
@@ -73,13 +81,13 @@
   import { useUserStore } from '@/store'
   import { useRouter } from 'vue-router'
   import { check } from '@/api/user'
+  import { ArrowForward, Reload } from '@vicons/ionicons5'
 
   const router = useRouter()
   const userStore = useUserStore()
   const { loading, setLoading } = useLoading()
 
   const showLoginBtn = ref(false)
-  const errorMessage = ref('')
   const userLoginReq = reactive({
     mobile: '',
     password: ''
@@ -115,7 +123,6 @@
         // Message.success('登录成功')
       } else {
         const userCheckedInfo = await check(userLoginReq.mobile)
-        console.log(userCheckedInfo)
         userInfo.avatar = userCheckedInfo.data.data.userInfo.avatar
         userInfo.name = userCheckedInfo.data.data.userInfo.name
       }
@@ -127,22 +134,23 @@
 </script>
 
 <style scoped>
-  .avatar {
-    width: 32px;
-    height: 32px;
-    border-radius: 10px;
-    margin-right: 10px;
-  }
   .font-reset {
     font-family: 'Poppins', 'SF Pro SC', sans-serif;
   }
 
   .fade-enter-active,
   .fade-leave-active {
-    transition: all 0.25s ease-in;
+    transition: all 0.15s ease-in;
   }
   .fade-enter-from,
   .fade-leave-to {
     opacity: 0;
+  }
+</style>
+
+<style>
+  .n-spin {
+    width: 30px;
+    height: 30px;
   }
 </style>

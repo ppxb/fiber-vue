@@ -1,17 +1,7 @@
 <template>
-  <a-layout-footer class="footer"
-    >©️ 2022. Built by ppxb with 🥰</a-layout-footer
+  <div
+    class="absolute flex items-center justify-center font-600 color-[#333] bottom-8"
   >
+    ©️ 2022. Built by ppxb with 🥰
+  </div>
 </template>
-
-<style scoped>
-  .footer {
-    position: absolute;
-    bottom: 32px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: 600;
-    color: #313131;
-  }
-</style>
