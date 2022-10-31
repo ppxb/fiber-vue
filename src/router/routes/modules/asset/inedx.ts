@@ -27,6 +27,14 @@ const assetRoutes: RouteRecordRaw[] = [
         meta: {
           title: '盘点'
         }
+      },
+      {
+        path: 'config',
+        name: 'assetConfig',
+        component: () => import('@/views/asset/check/index.vue'),
+        meta: {
+          title: '设置'
+        }
       }
     ]
   }

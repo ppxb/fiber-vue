@@ -1,4 +1,5 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
+import useRouterGuard from './permisstion'
 import routes from './routes'
 
 const router = createRouter({
@@ -7,19 +8,6 @@ const router = createRouter({
   scrollBehavior: () => ({ top: 0 })
 })
 
-// useRouterGuard(router)
-
-// router.beforeEach((to, from, next) => {
-//   if (to.path === '/login') {
-//     next()
-//   } else {
-//     const token = getToken()
-//     if (!token) {
-//       next('/login')
-//     } else {
-//       next()
-//     }
-//   }
-// })
+useRouterGuard(router)
 
 export default router

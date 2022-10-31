@@ -29,7 +29,7 @@ const useUserStore = defineStore({
     async login(loginForm: LoginData) {
       try {
         const res = await userLogin(loginForm)
-        setToken(res.data.token)
+        this.setToken(res.data.token)
         const userInfo = useStorage('userInfo', {}, sessionStorage)
         userInfo.value = res.data.userInfo
         this.userInfo = res.data.userInfo
@@ -45,6 +45,11 @@ const useUserStore = defineStore({
       } catch (err) {
         return err
       }
+    },
+    setToken(token: string) {
+      const tokenRef = useStorage('token', token, sessionStorage)
+      tokenRef.value = token
+      this.token = token
     },
     setUserMenuRoutes() {
       const userRoutes = useStorage<RouteRecordRaw[]>(

@@ -7,6 +7,7 @@ const dashboardRoutes: RouteRecordRaw[] = [
     path: '/dashboard',
     name: 'Dashboard',
     component: layout,
+    redirect: '/dashboard/workspace',
     meta: {
       title: '控制台'
     },
