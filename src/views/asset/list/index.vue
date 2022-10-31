@@ -13,6 +13,7 @@
         :loading="loading"
         @update:page="handlePageChange"
         :row-props="rowProps"
+        :bordered="false"
         remote
       />
     </n-space>
@@ -56,21 +57,19 @@
           </div>
         </template>
         <div class="flex mb-8">
-          <div class="flex flex-col b-r b-[rgba(0,0,0,.1)] mr-8 pr-8">
-            <div class="color-gray-600 mb-[2px]">入库时间</div>
-            <div class="color-dark-800 font-600 text-5">
+          <div class="flex flex-col b-r b-[rgba(0,0,0,.05)] mr-8 pr-8">
+            <div class="color-[#666] mb-[2px] font-700">入库时间</div>
+            <div class="color-dark-900 font-400">
               {{ selectItem.indate }}
             </div>
           </div>
-          <div class="flex flex-col b-r b-[rgba(0,0,0,.1)] mr-8 pr-8">
-            <div class="color-gray-600 mb-[2px]">资产价值</div>
-            <div class="color-dark-800 font-600 text-5">
-              ￥{{ selectItem.value }}
-            </div>
+          <div class="flex flex-col b-r b-[rgba(0,0,0,.05)] mr-8 pr-8">
+            <div class="color-[#666] mb-[2px] font-700">资产价值</div>
+            <div class="color-dark-900 font-400">￥{{ selectItem.value }}</div>
           </div>
           <div class="flex flex-col">
-            <div class="color-gray-600 mb-[2px]">状态</div>
-            <div class="color-dark-800 font-600 text-5">
+            <div class="color-[#666] mb-[2px] font-700">状态</div>
+            <div class="color-dark-900">
               {{ selectItem.status }}
             </div>
           </div>

@@ -17,7 +17,7 @@ const assetRoutes: RouteRecordRaw[] = [
         name: 'assetList',
         component: () => import('@/views/asset/list/index.vue'),
         meta: {
-          title: '列表',
+          title: '资产列表',
           header: '资产列表'
         }
       },
@@ -26,7 +26,7 @@ const assetRoutes: RouteRecordRaw[] = [
         name: 'assetCheck',
         component: () => import('@/views/asset/check/index.vue'),
         meta: {
-          title: '盘点',
+          title: '资产盘点',
           header: '资产盘点'
         }
       },
@@ -35,7 +35,7 @@ const assetRoutes: RouteRecordRaw[] = [
         name: 'assetConfig',
         component: () => import('@/views/asset/check/index.vue'),
         meta: {
-          title: '配置',
+          title: '资产配置',
           header: '资产配置'
         }
       }

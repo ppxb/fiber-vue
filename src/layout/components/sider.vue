@@ -1,6 +1,6 @@
 <template>
   <n-layout-sider
-    class="z-[99] p-6 bg-[#F1F0F5]"
+    class="z-[99] p-6"
     collapse-mode="width"
     :width="320"
     :native-scrollbar="false"
@@ -18,8 +18,3 @@
 <script lang="ts" setup>
   import Menu from './menu.vue'
 </script>
-
-<style scoped>
-  :deep(.arco-menu.arco-menu-vertical.arco-menu-collapsed) {
-  }
-</style>
