@@ -31,5 +31,11 @@
     }
   ]
 
-  const handleSelect = () => {}
+  const handleSelect = async (key: string) => {
+    switch (key) {
+      case 'logout':
+        sessionStorage.clear()
+        window.location.reload()
+    }
+  }
 </script>

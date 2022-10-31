@@ -61,3 +61,41 @@
     update()
   })
 </script>
+
+<style scoped>
+  @keyframes spin {
+    0% {
+      -webkit-transform: rotate(0deg);
+    }
+    50% {
+      -webkit-transform: rotate(180deg);
+    }
+    100% {
+      -webkit-transform: rotate(360deg);
+    }
+  }
+
+  .fiber-icon {
+    min-height: 1em;
+    min-width: 1em;
+    line-height: 1em;
+    text-align: center;
+    display: inline-block;
+    position: relative;
+    fill: currentColor;
+    transform: translateZ(0);
+    transition: 0.3s var(--cubic-bezier-ease-in-out);
+  }
+
+  .fiber-icon-spin {
+    animation: spin 1s infinite linear;
+  }
+
+  span.iconify {
+    display: inline-flex;
+    min-width: 1em;
+    min-height: 1em;
+    border-radius: 100%;
+    transition: 0.3s var(--cubic-bezier-ease-in-out);
+  }
+</style>

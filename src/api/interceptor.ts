@@ -1,7 +1,6 @@
 import { getToken } from '@/utils/auth'
 import axios from 'axios'
 import type { AxiosRequestConfig, AxiosResponse } from 'axios'
-import { useUserStore } from '@/store'
 
 axios.interceptors.request.use(
   (config: AxiosRequestConfig) => {
