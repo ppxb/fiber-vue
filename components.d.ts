@@ -8,9 +8,14 @@ export {}
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
     Footer: typeof import('./src/components/footer/index.vue')['default']
-    Menu: typeof import('./src/components/menu/index.vue')['default']
+    Icon: typeof import('./src/components/icon/index.vue')['default']
+    NAvatar: typeof import('naive-ui')['NAvatar']
+    NDropdown: typeof import('naive-ui')['NDropdown']
+    NEl: typeof import('naive-ui')['NEl']
     NIcon: typeof import('naive-ui')['NIcon']
     NLayout: typeof import('naive-ui')['NLayout']
+    NLayoutContent: typeof import('naive-ui')['NLayoutContent']
+    NLayoutHeader: typeof import('naive-ui')['NLayoutHeader']
     NLayoutSider: typeof import('naive-ui')['NLayoutSider']
     NMenu: typeof import('naive-ui')['NMenu']
     NScrollbar: typeof import('naive-ui')['NScrollbar']

@@ -30,8 +30,9 @@ const useUserStore = defineStore({
       try {
         const res = await userLogin(loginForm)
         setToken(res.data.token)
+        const userInfo = useStorage('userInfo', {}, sessionStorage)
+        userInfo.value = res.data.userInfo
         this.userInfo = res.data.userInfo
-        localStorage.setItem('userInfo', JSON.stringify(this.userInfo))
       } catch (err) {
         clearToken()
         throw err

@@ -12,13 +12,15 @@
     "esModuleInterop": true,
     "lib": ["ESNext", "DOM"],
     "skipLibCheck": true,
+    "noImplicitThis": true,
+    "forceConsistentCasingInFileNames": true,
+    "strictFunctionTypes": false,
     "types": ["vite/client"],
     "baseUrl": ".",
     "paths": {
       "@/*":["src/*"]
     }
   },
-  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue"],
+  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue","vite.config.ts","components.d.ts"],
   "references": [{ "path": "./tsconfig.node.json" }],
-  "exclude": ["node_modules"]
 }

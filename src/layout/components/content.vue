@@ -1,22 +1,21 @@
 <template>
-  <a-layout class="content">
-    <router-view>
-      <template #default="{ Component, route }">
-        <transition name="fade" mode="out-in" appear>
-          <component :is="Component" :key="route.path" />
+  <n-layout-content
+    position="absolute"
+    :native-scrollbar="false"
+    class="mt-32 px-[40px]"
+  >
+    <router-view v-slot="{ Component }">
+      <template v-if="Component">
+        <transition name="fade">
+          <component :is="Component" />
         </transition>
       </template>
     </router-view>
-  </a-layout>
+  </n-layout-content>
 </template>
 
-<style scoped>
-  .main {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-    position: relative;
-  }
-</style>
+<script lang="ts" setup>
+  import { useRoute } from 'vue-router'
+
+  const route = useRoute()
+</script>

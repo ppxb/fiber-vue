@@ -1,5 +1,6 @@
 import type { MenuOption } from 'naive-ui'
 import type { RouteRecordRaw } from 'vue-router'
+import Icon from '@/components/icon/index.vue'
 
 const getMenuOptions = (routes: RouteRecordRaw[]): MenuOption[] => {
   let menuOptions: MenuOption[] = []
@@ -21,11 +22,6 @@ const getMenuOptions = (routes: RouteRecordRaw[]): MenuOption[] => {
               )
             }
           },
-          icon: route.meta?.icon
-            ? () => {
-                // return <Icon name={route.meta?.icon as string} />
-              }
-            : undefined,
           key: route.name as string
         }
         if (route.children && route.children.length > 0) {

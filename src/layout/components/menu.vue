@@ -2,12 +2,13 @@
   <n-scrollbar>
     <n-menu
       :options="menus"
-      :root-intent="16"
-      :intent="12"
+      :indent="16"
+      :root-indent="16"
       :expanded-keys="expandKeys"
       :on-update:expanded-keys="updateExpandKeys"
       :value="currentMenu"
       :on-update:value="updateValue"
+      class="text-4 font-600"
     />
   </n-scrollbar>
 </template>

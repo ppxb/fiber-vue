@@ -4,6 +4,7 @@ import vue from '@vitejs/plugin-vue'
 import Components from 'unplugin-vue-components/vite'
 import { NaiveUiResolver } from 'unplugin-vue-components/resolvers'
 import vueJsx from '@vitejs/plugin-vue-jsx'
+import purgeIcons from 'vite-plugin-purge-icons'
 import unocss from 'unocss/vite'
 
 export default defineConfig({
@@ -11,6 +12,7 @@ export default defineConfig({
     vue(),
     unocss(),
     vueJsx(),
+    purgeIcons(),
     Components({
       dirs: ['src/components', 'src/layouts'],
       resolvers: [NaiveUiResolver()]
@@ -20,13 +22,12 @@ export default defineConfig({
     alias: [
       {
         find: '@',
-        replacement: resolve(__dirname, './src')
+        replacement: resolve(__dirname, 'src')
       },
       {
         find: 'assets',
         replacement: resolve(__dirname, './src/assets')
       }
-    ],
-    extensions: ['.ts', '.js']
+    ]
   }
 })
