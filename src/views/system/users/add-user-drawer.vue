@@ -176,5 +176,6 @@
   }
   :deep(.n-base-selection) {
     border-radius: 10px;
+    font-weight: 700;
   }
 </style>
