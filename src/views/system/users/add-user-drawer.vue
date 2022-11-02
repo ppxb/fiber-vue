@@ -17,10 +17,10 @@
               <div class="text-4 font-700">基本信息</div>
             </template>
 
-            <n-form-item path="name" label="姓名">
+            <n-form-item path="name" label="职员姓名">
               <n-input
                 v-model:value="modelRef.name"
-                placeholder="请输入员工的真实姓名"
+                placeholder="请输入职员的真实姓名"
               />
             </n-form-item>
             <n-form-item path="mobile" label="手机号码">
@@ -31,7 +31,11 @@
                 placeholder="请输入员工的手机号码"
               />
             </n-form-item>
-            <n-form-item path="email" label="电子邮箱" :show-feedback="false">
+            <n-form-item
+              path="email"
+              label="电子邮箱地址"
+              :show-feedback="false"
+            >
               <n-input v-model:value="modelRef.email" disabled />
             </n-form-item>
             <div class="mt-2 color-[#666]">
@@ -42,18 +46,18 @@
             <template #header>
               <div class="text-4 font-700">部门岗位</div>
             </template>
-            <n-form-item label="部门信息">
+            <n-form-item label="职员归属部门">
               <n-select
                 v-model:value="modelRef.dept"
                 :options="deptOptions"
-                placeholder="请选择职员的部门"
+                placeholder="请选择职员所属的部门"
               />
             </n-form-item>
-            <n-form-item label="岗位信息" v-if="modelRef.dept">
+            <n-form-item label="职员岗位" v-if="modelRef.dept">
               <n-select
                 v-model:value="modelRef.role"
                 :options="roleOptions"
-                placeholder="请选择职员的部门"
+                placeholder="请选择职员的岗位"
               />
             </n-form-item>
           </n-collapse-item>
