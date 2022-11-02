@@ -81,7 +81,7 @@
         >
           <n-collapse-item name="1">
             <template #header>
-              <div class="text-lg font-700">归属项目</div>
+              <div class="text-lg font-700">项目关系</div>
             </template>
             <div>可以</div>
           </n-collapse-item>

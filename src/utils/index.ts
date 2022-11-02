@@ -1,25 +1,28 @@
-type TargetContext = '_self' | '_parent' | '_blank' | '_top'
+export * from './form'
 
-export const openWindow = (
-  url: string,
-  opts?: { target?: TargetContext; [key: string]: any }
-) => {
-  const { target = '_blank', ...others } = opts || {}
-  window.open(
-    url,
-    target,
-    Object.entries(others)
-      .reduce((preValue: string[], curValue) => {
-        const [key, value] = curValue
-        return [...preValue, `${key}=${value}`]
-      }, [])
-      .join(',')
-  )
+const stringSet =
+  '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
+
+const randomInt = (min: number, max: number) =>
+  min + Math.floor(Math.random() * (max - min + 1))
+
+const randomSequence = (len: number, list: string | []) => {
+  if (len <= 1) {
+    len = 1
+  }
+  let s = ''
+  let n = list.length
+  if (typeof list === 'string') {
+    while (len-- > 0) {
+      s += list.charAt(Math.random() * n)
+    }
+  } else if (list instanceof Array) {
+    while (len-- > 0) {
+      s += list[Math.floor(Math.random() * n)]
+    }
+  }
+  return s
 }
 
-export const regexUrl = new RegExp(
-  '^(?!mailto:)(?:(?:http|https|ftp)://)(?:\\S+(?::\\S*)?@)?(?:(?:(?:[1-9]\\d?|1\\d\\d|2[01]\\d|22[0-3])(?:\\.(?:1?\\d{1,2}|2[0-4]\\d|25[0-5])){2}(?:\\.(?:[0-9]\\d?|1\\d\\d|2[0-4]\\d|25[0-4]))|(?:(?:[a-z\\u00a1-\\uffff0-9]+-?)*[a-z\\u00a1-\\uffff0-9]+)(?:\\.(?:[a-z\\u00a1-\\uffff0-9]+-?)*[a-z\\u00a1-\\uffff0-9]+)*(?:\\.(?:[a-z\\u00a1-\\uffff]{2,})))|localhost)(?::\\d{2,5})?(?:(/|\\?|#)[^\\s]*)?$',
-  'i'
-)
-
-export default null
+export const generateEmail = () =>
+  randomSequence(randomInt(8, 12), stringSet) + '@sytech.com'

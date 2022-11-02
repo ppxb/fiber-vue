@@ -1,9 +1,9 @@
 <template>
   <n-layout-header
     position="absolute"
-    class="h-[100px] flex w-full justify-between items-center px-10"
+    class="flex justify-between items-center px-10 pt-6"
   >
-    <div class="text-4xl font-700">{{ headerTitle }}</div>
+    <div class="text-3xl font-700">{{ headerTitle }}</div>
     <div>
       <UserDropdown />
     </div>
@@ -22,7 +22,7 @@
   watch(
     () => route.path,
     () => {
-      headerTitle.value = route.meta.header
+      headerTitle.value = route.meta.title
     },
     { immediate: true }
   )

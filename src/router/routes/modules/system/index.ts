@@ -14,9 +14,9 @@ const systemRoutes: RouteRecordRaw[] = [
       {
         path: 'users',
         name: 'Users',
-        component: () => import('@/views/asset/check/index.vue'),
+        component: () => import('@/views/system/users/index.vue'),
         meta: {
-          title: '用户管理'
+          title: '职员管理'
         }
       },
       {

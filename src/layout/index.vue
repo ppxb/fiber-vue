@@ -1,6 +1,6 @@
 <template>
   <n-layout has-sider position="absolute">
-    <Sider />
+    <Sidebar />
     <n-layout>
       <Header />
       <Content />
@@ -9,7 +9,7 @@
 </template>
 
 <script lang="ts" setup>
-  import Sider from './components/sider.vue'
+  import Sidebar from './components/sidebar.vue'
   import Header from './components/header.vue'
   import Content from './components/content.vue'
 </script>

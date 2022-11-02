@@ -2,7 +2,7 @@
   <n-layout-content
     position="absolute"
     :native-scrollbar="false"
-    class="mt-32 px-[40px]"
+    class="mt-[116px] px-[40px]"
   >
     <router-view v-slot="{ Component }">
       <template v-if="Component">
