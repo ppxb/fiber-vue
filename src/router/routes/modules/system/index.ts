@@ -16,15 +16,15 @@ const systemRoutes: RouteRecordRaw[] = [
         name: 'Users',
         component: () => import('@/views/system/users/index.vue'),
         meta: {
-          title: '职员管理'
+          title: '职员'
         }
       },
       {
         path: 'department',
         name: 'Department',
-        component: () => import('@/views/asset/check/index.vue'),
+        component: () => import('@/views/system/department/index.vue'),
         meta: {
-          title: '部门管理'
+          title: '部门和组织'
         }
       },
       {

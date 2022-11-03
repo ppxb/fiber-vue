@@ -7,9 +7,7 @@ const randomInt = (min: number, max: number) =>
   min + Math.floor(Math.random() * (max - min + 1))
 
 const randomSequence = (len: number, list: string | []) => {
-  if (len <= 1) {
-    len = 1
-  }
+  if (len <= 1) len = 1
   let s = ''
   let n = list.length
   if (typeof list === 'string') {
@@ -26,3 +24,12 @@ const randomSequence = (len: number, list: string | []) => {
 
 export const generateEmail = () =>
   randomSequence(randomInt(8, 12), stringSet) + '@sytech.com'
+
+export const resetReactive = (object: any) => {
+  const tempObj: { [name: string]: any | null } = {}
+  Object.keys(object).forEach((item) => {
+    tempObj[item] = null
+  })
+
+  Object.assign(object, tempObj)
+}

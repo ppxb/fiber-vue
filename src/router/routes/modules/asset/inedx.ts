@@ -9,7 +9,7 @@ const assetRoutes: RouteRecordRaw[] = [
     component: layout,
     redirect: '/asset/list',
     meta: {
-      title: '资产'
+      title: '资产管理'
     },
     children: [
       {
@@ -17,8 +17,8 @@ const assetRoutes: RouteRecordRaw[] = [
         name: 'assetList',
         component: () => import('@/views/asset/list/index.vue'),
         meta: {
-          title: '资产列表',
-          header: '资产列表'
+          title: '列表',
+          header: '列表'
         }
       },
       {
@@ -26,8 +26,8 @@ const assetRoutes: RouteRecordRaw[] = [
         name: 'assetCheck',
         component: () => import('@/views/asset/check/index.vue'),
         meta: {
-          title: '资产盘点',
-          header: '资产盘点'
+          title: '盘点',
+          header: '盘点'
         }
       },
       {
@@ -35,8 +35,8 @@ const assetRoutes: RouteRecordRaw[] = [
         name: 'assetConfig',
         component: () => import('@/views/asset/check/index.vue'),
         meta: {
-          title: '资产配置',
-          header: '资产配置'
+          title: '配置',
+          header: '配置'
         }
       }
     ]
