@@ -27,9 +27,16 @@
                 placeholder="请选择组织所属层级"
               />
             </n-form-item>
-            <div class="color-[#666] mb-[26px]">
+            <div class="color-[#666] mb-4">
               目前还未开放项目级组织的新增规则。
             </div>
+            <n-form-item path="level" label="上级组织">
+              <n-select
+                v-model:value="modelRef.level"
+                :options="parentOptions"
+                placeholder="请选择上级组织"
+              />
+            </n-form-item>
             <n-form-item label="组织负责人" :show-feedback="false">
               <n-select
                 v-model:value="modelRef.head"
@@ -87,12 +94,14 @@
     name: string | null
     level: number | null
     head: string | null
+    parent: string | null
   }
 
   const modelRef = reactive<ModelType>({
     name: null,
     level: null,
-    head: null
+    head: null,
+    parent: null
   })
 
   const handleSubmit = () => {
@@ -120,6 +129,17 @@
       value: 'ssdda524d6asd',
       avatar:
         'https://img2.woyaogexing.com/2022/06/12/486ebe52e53d5f45!400x400.jpg'
+    }
+  ]
+
+  const parentOptions = [
+    {
+      label: '成都经开园区投资有限公司',
+      value: 'sa1da5s4d6asd'
+    },
+    {
+      label: '成都经开数运城市运营管理有限公司',
+      value: 'sda21312321as'
     }
   ]
 
