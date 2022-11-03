@@ -41,9 +41,7 @@
                 clearable
               >
                 <template #empty>
-                  <div class="text-4 color-[#666]">
-                    抱歉，没有找到相关的数据
-                  </div>
+                  <div class="text-4 color-[#666]">抱歉，没有找到相关数据</div>
                 </template>
               </n-select>
             </n-form-item>
