@@ -29,5 +29,15 @@ export default defineConfig({
         replacement: resolve(__dirname, './src/assets')
       }
     ]
+  },
+  server: {
+    host: '127.0.0.1',
+    proxy: {
+      '/api': {
+        target: 'http://127.0.0.1:8001/api/v1',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api/, '')
+      }
+    }
   }
 })

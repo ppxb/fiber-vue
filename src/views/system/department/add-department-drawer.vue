@@ -2,9 +2,9 @@
   <n-drawer v-model:show="show" :width="400" :on-update:show="updateShow">
     <n-drawer-content :header-style="headerStyle" :body-style="bodyStyle">
       <template #header>
-        <div class="flex color-[#333] text-3xl font-700 mb-16">新增组织</div>
+        <div class="flex color-[#333] text-3xl font-700 mb-16">新增部门</div>
         <div class="color-[#666] text-4">
-          添加新组织至少需要设置相关的基础信息。
+          添加新部门至少需要设置相关的基础信息。
         </div>
       </template>
       <n-collapse arrow-placement="right" :default-expanded-names="['1']">
@@ -14,36 +14,36 @@
               <div class="text-4 font-700">基本信息</div>
             </template>
 
-            <n-form-item path="name" label="组织名称">
+            <n-form-item path="name" label="部门名称">
               <n-input
                 v-model:value="modelRef.name"
-                placeholder="请输入组织名称"
+                placeholder="请输入部门名称"
               />
             </n-form-item>
-            <n-form-item path="level" label="组织层级">
+            <n-form-item path="level" label="部门层级">
               <n-select
                 v-model:value="modelRef.level"
                 :options="departmentOptions"
-                placeholder="请选择组织所属层级"
+                placeholder="请选择部门所属层级"
               />
             </n-form-item>
             <div class="color-[#666] mb-4">
-              目前还未开放项目级组织的新增规则。
+              目前还未开放项目级部门或组织的新增规则。
             </div>
-            <n-form-item path="level" label="上级组织">
+            <n-form-item path="level" label="上级部门">
               <n-select
-                v-model:value="modelRef.level"
+                v-model:value="modelRef.parentId"
                 :options="parentOptions"
-                placeholder="请选择上级组织"
+                placeholder="请选择上级部门"
               />
             </n-form-item>
-            <n-form-item label="组织负责人" :show-feedback="false">
+            <n-form-item label="部门负责人" :show-feedback="false">
               <n-select
-                v-model:value="modelRef.head"
+                v-model:value="modelRef.headerId"
                 :options="headOptions"
                 :render-label="renderLabel"
                 :render-tag="renderSingleSelectTag"
-                placeholder="请选择组织负责人"
+                placeholder="请选择部门负责人"
                 filterable
                 clearable
               >
@@ -82,6 +82,7 @@
   import { FormRules, NAvatar, NText } from 'naive-ui'
   import { h, reactive, ref, watch } from 'vue'
   import { resetReactive } from '@/utils'
+  import { create as createDept } from '@/api/system'
 
   const props = defineProps({
     show: {
@@ -93,19 +94,27 @@
   interface ModelType {
     name: string | null
     level: number | null
-    head: string | null
-    parent: string | null
+    headerId: string | null
+    parentId: string | null
   }
 
   const modelRef = reactive<ModelType>({
     name: null,
     level: null,
-    head: null,
-    parent: null
+    headerId: null,
+    parentId: null
   })
 
-  const handleSubmit = () => {
-    console.log(modelRef)
+  const handleSubmit = async () => {
+    const res = await createDept({
+      ...modelRef,
+      ...{
+        headerId: modelRef.headerId || '',
+        parentId: modelRef.parentId || ''
+      }
+    })
+    updateShow()
+    resetReactive(modelRef)
   }
 
   const headOptions = [
