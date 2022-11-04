@@ -82,7 +82,8 @@
   import { FormRules, NAvatar, NText } from 'naive-ui'
   import { h, reactive, ref, watch } from 'vue'
   import { resetReactive } from '@/utils'
-  import { create as createDept } from '@/api/system'
+  import { createDept } from '@/api/system'
+  import { CreateDeptReq } from '@/api/system/types'
 
   const props = defineProps({
     show: {
@@ -91,14 +92,7 @@
     }
   })
 
-  interface ModelType {
-    name: string | null
-    level: number | null
-    headerId: string | null
-    parentId: string | null
-  }
-
-  const modelRef = reactive<ModelType>({
+  const modelRef = reactive<CreateDeptReq>({
     name: null,
     level: null,
     headerId: null,
@@ -114,7 +108,6 @@
       }
     })
     updateShow()
-    resetReactive(modelRef)
   }
 
   const headOptions = [
@@ -244,6 +237,7 @@
 
   const updateShow = () => {
     show.value = false
+    resetReactive(modelRef)
     emit('update-show', false)
   }
 

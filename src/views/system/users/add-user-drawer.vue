@@ -1,5 +1,5 @@
 <template>
-  <n-drawer v-model:show="show" :width="600" :on-update:show="updateShow">
+  <n-drawer v-model:show="show" :width="400" :on-update:show="updateShow">
     <n-drawer-content :header-style="headerStyle" :body-style="bodyStyle">
       <template #header>
         <div class="flex color-[#333] text-3xl font-700 mb-16">新增职员</div>
@@ -39,23 +39,23 @@
               <n-input v-model:value="modelRef.email" disabled />
             </n-form-item>
             <div class="mt-2 color-[#666]">
-              该职员的电子邮箱和初始密码由系统自动生成
+              电子邮箱、初始密码和头像由系统自动生成，可在职员登陆后自行修改。
             </div>
           </n-collapse-item>
           <n-collapse-item name="2">
             <template #header>
               <div class="text-4 font-700">部门岗位</div>
             </template>
-            <n-form-item label="职员归属部门">
+            <n-form-item label="所属部门">
               <n-select
-                v-model:value="modelRef.dept"
+                v-model:value="modelRef.deptId"
                 :options="deptOptions"
-                placeholder="请选择职员所属的部门"
+                placeholder="请选择职员所在部门"
               />
             </n-form-item>
-            <n-form-item label="职员岗位" v-if="modelRef.dept">
+            <n-form-item label="职员岗位" v-if="modelRef.deptId">
               <n-select
-                v-model:value="modelRef.role"
+                v-model:value="modelRef.roleId"
                 :options="roleOptions"
                 placeholder="请选择职员的岗位"
               />
@@ -69,8 +69,9 @@
 
 <script lang="ts" setup>
   import { FormRules } from 'naive-ui'
-  import { ref, watch } from 'vue'
-  import { generateEmail, onlyAllowNumber } from '@/utils'
+  import { reactive, ref, watch } from 'vue'
+  import { generateEmail, onlyAllowNumber, resetReactive } from '@/utils'
+  import { CreateUserReq } from '@/api/system/types'
 
   const props = defineProps({
     show: {
@@ -79,20 +80,13 @@
     }
   })
 
-  interface ModelType {
-    name: string | null
-    mobile: string | null
-    email: string | null
-    dept: string | null
-    role: string | null
-  }
-
-  const modelRef = ref<ModelType>({
+  const modelRef = reactive<CreateUserReq>({
     name: null,
     mobile: null,
-    email: generateEmail(),
-    dept: null,
-    role: null
+    email: null,
+    deptId: null,
+    roleId: null,
+    avatar: null
   })
 
   const rules: FormRules = {
@@ -142,12 +136,16 @@
 
   const updateShow = () => {
     show.value = false
+    resetReactive(modelRef)
     emit('update-show', false)
   }
 
   watch(
     () => props.show,
-    () => (show.value = props.show)
+    () => {
+      if (props.show) modelRef.email = generateEmail()
+      show.value = props.show
+    }
   )
 
   const headerStyle = {
@@ -163,7 +161,7 @@
 <style scoped>
   :deep(.n-form-item .n-form-item-label) {
     font-size: 1rem;
-    font-weight: 700;
+    font-weight: 600;
     margin-bottom: 4px;
   }
 
@@ -180,6 +178,22 @@
   }
   :deep(.n-base-selection) {
     border-radius: 10px;
-    font-weight: 700;
+    font-weight: 600;
+  }
+
+  :deep(.n-base-selection-placeholder__inner) {
+    font-weight: 100;
+  }
+
+  :deep(.n-base-selection-overlay__wrapper) {
+    font-weight: 100;
+  }
+
+  :deep(.n-base-selection-overlay__wrapper div) {
+    font-weight: 600;
+  }
+
+  :deep(.n-button) {
+    border-radius: 12px;
   }
 </style>
