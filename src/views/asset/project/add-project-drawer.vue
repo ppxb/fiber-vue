@@ -21,9 +21,11 @@
               />
             </n-form-item>
             <n-form-item path="parent" label="上级项目" :show-feedback="false">
-              <n-select
+              <n-tree-select
                 v-model:value="modelRef.parentProjectId"
                 :options="parentOptions"
+                label-field="name"
+                key-field="uuid"
                 placeholder="请选择上级项目"
               >
                 <template #empty>
@@ -31,7 +33,7 @@
                     抱歉，没有找到相关项目或无项目
                   </div>
                 </template>
-              </n-select>
+              </n-tree-select>
             </n-form-item>
             <div class="color-[#666] mt-4">
               若未选择上级项目或无上级项目，则建立顶级项目。
@@ -73,6 +75,10 @@
     show: {
       type: Boolean,
       retuired: true
+    },
+    data: {
+      type: Object,
+      required: true
     }
   })
 
@@ -82,7 +88,7 @@
   })
 
   const handleSubmit = async () => {
-    const res = await createProject({
+    await createProject({
       ...modelRef,
       ...{
         parentProjectId: modelRef.parentProjectId || ''
@@ -90,8 +96,6 @@
     })
     updateShow()
   }
-
-  const parentOptions: any = []
 
   const rules: FormRules = {
     name: [
@@ -105,6 +109,7 @@
   const emit = defineEmits(['update-show'])
 
   const show = ref(props.show)
+  const parentOptions = ref()
 
   const updateShow = () => {
     show.value = false
@@ -115,6 +120,11 @@
   watch(
     () => props.show,
     () => (show.value = props.show)
+  )
+
+  watch(
+    () => props.data,
+    () => (parentOptions.value = props.data)
   )
 
   const headerStyle = {

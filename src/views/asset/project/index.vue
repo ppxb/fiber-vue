@@ -5,46 +5,56 @@
         <n-button @click="showAdd = true">新增项目</n-button>
       </n-space>
       <n-data-table
-        :columns="createColumns()"
+        :columns="columns"
         :data="data"
+        :row-key="rowKey"
         :pagination="pagination"
         :loading="loading"
         @update:page="handlePageChange"
-        :row-props="rowProps"
         :bordered="false"
         remote
       />
     </n-space>
-    <add-project-drawer :show="showAdd" @update-show="updateShowAdd" />
+    <add-project-drawer
+      :show="showAdd"
+      @update-show="updateShowAdd"
+      :data="data"
+    />
   </div>
 </template>
 
 <script lang="ts" setup>
   import { onMounted, reactive, ref } from 'vue'
-  import { list } from '@/api/asset'
-  import { RowData } from 'naive-ui/es/data-table/src/interface'
+  import { getProjectList } from '@/api/asset'
   import addProjectDrawer from './add-project-drawer.vue'
+  import type { DataTableColumns } from 'naive-ui'
+  import { getTreeDataTable } from '@/utils/form'
 
-  const createColumns = () => {
-    return [
-      {
-        title: '名称',
-        key: 'name'
-      },
-      {
-        title: '项目ID',
-        key: 'id'
-      }
-    ]
+  type RowData = {
+    name: string
+    uuid: string
+    parentProjectId: string
+    children?: RowData[]
   }
 
-  const showAdd = ref(false)
+  const columns: DataTableColumns<RowData> = [
+    {
+      title: '项目名称',
+      key: 'name'
+    },
+    {
+      title: 'UUID',
+      key: 'uuid'
+    }
+  ]
+
+  const rowKey = (row: RowData) => row.uuid
   const updateShowAdd = () => (showAdd.value = false)
 
-  const data = ref([])
+  const data = ref<RowData[]>([])
+  const showAdd = ref(false)
   const loading = ref(true)
   const showDetail = ref(false)
-  const selectItem = ref<RowData>({})
   const pagination = reactive({
     page: 1,
     pageCount: 1,
@@ -53,16 +63,6 @@
       return `总计 ${itemCount}`
     }
   })
-
-  const rowProps = (row: RowData) => {
-    return {
-      style: 'cursor:pointer;',
-      onClick: () => {
-        selectItem.value = row
-        showDetail.value = true
-      }
-    }
-  }
 
   const handlePageChange = async (currentPage: number) => {
     loading.value = true
@@ -74,13 +74,16 @@
     loading.value = false
   }
 
+  // const treeData = computed(() => getTreeDataTable(data.value))
+
   onMounted(async () => {
-    // const res = await list({
-    //   page: 1
-    // })
-    // data.value = res.data.list
-    // pagination.pageCount = res.data.total / 10
-    // loading.value = false
+    const res = await getProjectList({
+      page: 0,
+      pageSize: 10
+    })
+    data.value = getTreeDataTable(res.data.projects)
+    pagination.pageCount = res.data.total / 10
+    loading.value = false
   })
 </script>
 

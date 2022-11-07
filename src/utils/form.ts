@@ -1,1 +1,25 @@
 export const onlyAllowNumber = (value: string) => !value || /^\d+$/.test(value)
+
+// change parentProjectId to parentId to be common use
+export const getTreeDataTable = (list: any) => {
+  let root = null
+  const tempList = JSON.parse(JSON.stringify(list))
+  tempList.forEach((el: any) => {
+    if (!el.parentProjectId) {
+      el.p = true
+      root = el
+      return
+    }
+    const parentEl =
+      tempList[
+        list.reduce((acc: any, el: any, i: number) => {
+          acc[el.uuid] = i
+          return acc
+        }, {})[el.parentProjectId]
+      ]
+
+    parentEl.children = [...(parentEl.children || []), el]
+  })
+
+  return tempList.filter((i: any) => i.p)
+}
