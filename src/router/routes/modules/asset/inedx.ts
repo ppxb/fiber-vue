@@ -31,6 +31,15 @@ const assetRoutes: RouteRecordRaw[] = [
         }
       },
       {
+        path: 'project',
+        name: 'assetProject',
+        component: () => import('@/views/asset/project/index.vue'),
+        meta: {
+          title: '项目',
+          header: '项目'
+        }
+      },
+      {
         path: 'config',
         name: 'assetConfig',
         component: () => import('@/views/asset/check/index.vue'),
