@@ -4,7 +4,7 @@
       <n-space justify="end">
         <n-button @click="showAdd = true">新增项目</n-button>
       </n-space>
-      <n-data-table
+      <!-- <n-data-table
         :columns="columns"
         :data="data"
         :row-key="rowKey"
@@ -13,18 +13,31 @@
         @update:page="handlePageChange"
         :bordered="false"
         remote
-      />
+      /> -->
+      <n-data-table
+        :columns="columns"
+        :data="data"
+        :row-key="rowKey"
+        :loading="loading"
+        :bordered="false"
+        remote
+      >
+        <template #empty>
+          <div class="color-[#666] mt-4">当前无项目。</div>
+        </template>
+      </n-data-table>
     </n-space>
     <add-project-drawer
       :show="showAdd"
       @update-show="updateShowAdd"
       :data="data"
+      :update="fetch"
     />
   </div>
 </template>
 
 <script lang="ts" setup>
-  import { onMounted, reactive, ref } from 'vue'
+  import { onMounted, ref } from 'vue'
   import { getProjectList } from '@/api/asset'
   import addProjectDrawer from './add-project-drawer.vue'
   import type { DataTableColumns } from 'naive-ui'
@@ -34,6 +47,7 @@
     name: string
     uuid: string
     parentProjectId: string
+    createdAt: string
     children?: RowData[]
   }
 
@@ -45,6 +59,10 @@
     {
       title: 'UUID',
       key: 'uuid'
+    },
+    {
+      title: '创建时间',
+      key: 'createdAt'
     }
   ]
 
@@ -55,36 +73,39 @@
   const showAdd = ref(false)
   const loading = ref(true)
   const showDetail = ref(false)
-  const pagination = reactive({
-    page: 1,
-    pageCount: 1,
-    pageSize: 10,
-    prefix({ itemCount }: any) {
-      return `总计 ${itemCount}`
-    }
-  })
+  // const pagination = reactive({
+  //   page: 1,
+  //   pageCount: 1,
+  //   pageSize: 10,
+  //   itemCount: 0,
+  //   prefix({ itemCount }: any) {
+  //     return `总计 ${itemCount}`
+  //   }
+  // })
 
-  const handlePageChange = async (currentPage: number) => {
-    loading.value = true
-    // const res = await list({
-    //   page: currentPage
-    // })
-    // pagination.page = currentPage
-    // data.value = res.data.list
-    loading.value = false
-  }
+  // const handlePageChange = async (currentPage: number) => {
+  //   loading.value = true
+  //   const res = await getProjectList({
+  //     page: currentPage - 1,
+  //     pageSize: pagination.pageSize
+  //   })
+  //   pagination.page = currentPage
+  //   data.value = res.data.list
+  //   loading.value = false
+  // }
 
-  // const treeData = computed(() => getTreeDataTable(data.value))
-
-  onMounted(async () => {
+  const fetch = async () => {
     const res = await getProjectList({
       page: 0,
       pageSize: 10
     })
     data.value = getTreeDataTable(res.data.projects)
-    pagination.pageCount = res.data.total / 10
+    // pagination.pageCount = Math.ceil(res.data.total / 10)
+    // pagination.itemCount = res.data.total
     loading.value = false
-  })
+  }
+
+  onMounted(async () => await fetch())
 </script>
 
 <style>

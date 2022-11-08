@@ -79,6 +79,10 @@
     data: {
       type: Object,
       required: true
+    },
+    update: {
+      type: Function,
+      required: true
     }
   })
 
@@ -95,6 +99,7 @@
       }
     })
     updateShow()
+    props.update()
   }
 
   const rules: FormRules = {

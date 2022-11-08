@@ -21,7 +21,7 @@ axios.interceptors.response.use(
   (response: AxiosResponse) => {
     const { message } = createDiscreteApi(['message'], {
       messageProviderProps: {
-        placement: 'top-right'
+        placement: 'top'
       }
     })
     const res = response.data
