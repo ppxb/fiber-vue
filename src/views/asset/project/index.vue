@@ -4,16 +4,6 @@
       <n-space justify="end">
         <n-button @click="showAdd = true">新增项目</n-button>
       </n-space>
-      <!-- <n-data-table
-        :columns="columns"
-        :data="data"
-        :row-key="rowKey"
-        :pagination="pagination"
-        :loading="loading"
-        @update:page="handlePageChange"
-        :bordered="false"
-        remote
-      /> -->
       <n-data-table
         :columns="columns"
         :data="data"
@@ -23,7 +13,7 @@
         remote
       >
         <template #empty>
-          <div class="color-[#666] mt-4">当前无项目。</div>
+          <div class="color-[#666] mt-4">当前无项目</div>
         </template>
       </n-data-table>
     </n-space>
@@ -73,26 +63,6 @@
   const showAdd = ref(false)
   const loading = ref(true)
   const showDetail = ref(false)
-  // const pagination = reactive({
-  //   page: 1,
-  //   pageCount: 1,
-  //   pageSize: 10,
-  //   itemCount: 0,
-  //   prefix({ itemCount }: any) {
-  //     return `总计 ${itemCount}`
-  //   }
-  // })
-
-  // const handlePageChange = async (currentPage: number) => {
-  //   loading.value = true
-  //   const res = await getProjectList({
-  //     page: currentPage - 1,
-  //     pageSize: pagination.pageSize
-  //   })
-  //   pagination.page = currentPage
-  //   data.value = res.data.list
-  //   loading.value = false
-  // }
 
   const fetch = async () => {
     const res = await getProjectList({
@@ -100,8 +70,6 @@
       pageSize: 10
     })
     data.value = getTreeDataTable(res.data.projects)
-    // pagination.pageCount = Math.ceil(res.data.total / 10)
-    // pagination.itemCount = res.data.total
     loading.value = false
   }
 

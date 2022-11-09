@@ -6,7 +6,6 @@ import store from './store'
 import 'uno.css'
 import VueQrcode from '@chenfengyuan/vue-qrcode'
 
-import './mock'
 import '@/api/interceptor'
 
 import '@/assets/style/global.css'

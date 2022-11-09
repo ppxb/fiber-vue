@@ -7,12 +7,16 @@
         <n-button @click="">导出报表</n-button>
       </n-space>
       <n-data-table
-        :columns="createColumns()"
+        :style="{ height: '700px' }"
+        :scroll-x="2400"
+        :columns="columns"
         :data="data"
         :pagination="pagination"
         :loading="loading"
         :row-props="rowProps"
         :bordered="false"
+        @update:page="handlePageChange"
+        flex-height
         remote
       />
     </n-space>
@@ -21,47 +25,84 @@
 </template>
 
 <script lang="ts" setup>
-  import { reactive, ref } from 'vue'
+  import { onMounted, reactive, ref } from 'vue'
   import { RowData } from 'naive-ui/es/data-table/src/interface'
   import ImportAssetsDrawer from './import-assets-drawer.vue'
+  import type { DataTableColumns } from 'naive-ui'
+  import { getAssetList } from '@/api/asset'
 
-  const createColumns = () => {
-    return [
-      {
-        title: '属性',
-        key: 'type'
-      },
-      {
-        title: '所属项目',
-        key: 'project'
-      },
-      {
-        title: '所属子项目',
-        key: 'sonProject'
-      },
-      {
-        title: '所属分部',
-        key: 'part'
-      },
-      {
-        title: '资产编号',
-        key: 'id'
-      },
-      {
-        title: '名称',
-        key: 'name'
-      },
-
-      {
-        title: '品牌',
-        key: 'brand'
-      },
-      {
-        title: '型号',
-        key: 'model'
+  const columns: DataTableColumns = [
+    {
+      title: '资产编号',
+      key: 'serial',
+      fixed: 'left',
+      width: '200'
+    },
+    {
+      title: '资产名称',
+      key: 'name',
+      fixed: 'left',
+      width: '200'
+    },
+    {
+      title: '所属项目',
+      key: 'projectName',
+      width: '300'
+    },
+    {
+      title: '所属子项目',
+      key: 'sonProjectName'
+    },
+    {
+      title: '所属分部',
+      key: 'partProjectName'
+    },
+    {
+      title: '资产类别',
+      key: 'type'
+    },
+    {
+      title: '资产属性',
+      key: 'kind'
+    },
+    {
+      title: '所处街道',
+      key: 'subDistrict'
+    },
+    {
+      title: '品牌',
+      key: 'brand'
+    },
+    {
+      title: '型号',
+      key: 'specs'
+    },
+    {
+      title: '单位',
+      key: 'unit'
+    },
+    {
+      title: '价值',
+      key: 'value'
+    },
+    {
+      title: '地址',
+      key: 'address',
+      width: '300',
+      ellipsis: {
+        tooltip: true
       }
-    ]
-  }
+    },
+    {
+      title: '物联网卡/网络开户号',
+      key: 'iotNetSerial',
+      width: '200'
+    },
+    {
+      title: '电表号',
+      key: 'emeterSerial'
+    }
+  ]
 
   const showImport = ref(false)
   const updateShowImport = () => (showImport.value = false)
@@ -73,11 +114,18 @@
   const pagination = reactive({
     page: 1,
     pageCount: 1,
-    pageSize: 10,
+    pageSize: 20,
+    itemCount: 0,
     prefix({ itemCount }: any) {
       return `总计 ${itemCount}`
     }
   })
+
+  const handlePageChange = async (currentPage: number) => {
+    loading.value = true
+    pagination.page = currentPage
+    await fetch()
+  }
 
   const rowProps = (row: RowData) => {
     return {
@@ -88,6 +136,19 @@
       }
     }
   }
+
+  const fetch = async () => {
+    const res = await getAssetList({
+      page: pagination.page - 1,
+      pageSize: pagination.pageSize
+    })
+    data.value = res.data.assets
+    pagination.pageCount = Math.ceil(res.data.total / 10)
+    pagination.itemCount = res.data.total
+    loading.value = false
+  }
+
+  onMounted(async () => await fetch())
 </script>
 
 <style>

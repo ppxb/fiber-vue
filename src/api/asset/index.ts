@@ -1,7 +1,9 @@
 import axios from 'axios'
 import { listReq, projectReq } from './types'
 
-export const list = (data: listReq) => axios.post('/api/asset/list', data)
+// get common assets list
+export const getAssetList = (data: listReq) =>
+  axios.post('/api/asset/list', data)
 
 export const importAssets = (data: any, header: any) =>
   axios.post('/api/asset/import', data, header)
