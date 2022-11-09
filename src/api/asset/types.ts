@@ -1,6 +1,7 @@
 export type listReq = {
   page: number | null
   pageSize: number | null
+  query?: any
 }
 
 export type projectReq = {

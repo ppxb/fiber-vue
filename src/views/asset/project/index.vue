@@ -67,7 +67,7 @@
   const fetch = async () => {
     const res = await getProjectList({
       page: 0,
-      pageSize: 10
+      pageSize: 20
     })
     data.value = getTreeDataTable(res.data.projects)
     loading.value = false

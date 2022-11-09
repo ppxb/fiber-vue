@@ -1,10 +1,24 @@
 <template>
   <div>
     <n-space vertical :size="12">
-      <n-space justify="end">
-        <n-button @click="">添加资产</n-button>
-        <n-button @click="showImport = true">批量导入</n-button>
-        <n-button @click="">导出报表</n-button>
+      <n-space justify="space-between">
+        <div>
+          <n-dropdown
+            :options="projectFilterOptions"
+            placement="bottom-start"
+            trigger="click"
+            label-field="name"
+            key-field="name"
+            @select="handleProjectSelect"
+          >
+            <n-button>项目筛选</n-button>
+          </n-dropdown>
+        </div>
+        <n-space>
+          <n-button @click="">添加资产</n-button>
+          <n-button @click="showImport = true">批量导入</n-button>
+          <n-button @click="">导出报表</n-button>
+        </n-space>
       </n-space>
       <n-data-table
         :style="{ height: '700px' }"
@@ -15,6 +29,7 @@
         :loading="loading"
         :row-props="rowProps"
         :bordered="false"
+        :render-cell="renderCell"
         @update:page="handlePageChange"
         flex-height
         remote
@@ -25,18 +40,31 @@
 </template>
 
 <script lang="ts" setup>
-  import { onMounted, reactive, ref } from 'vue'
+  import { h, onMounted, reactive, ref } from 'vue'
   import { RowData } from 'naive-ui/es/data-table/src/interface'
   import ImportAssetsDrawer from './import-assets-drawer.vue'
-  import type { DataTableColumns } from 'naive-ui'
-  import { getAssetList } from '@/api/asset'
+  import { DataTableColumns, NText } from 'naive-ui'
+  import { getAssetList, getProjectList } from '@/api/asset'
+  import { getTreeDataTable } from '@/utils/form'
 
   const columns: DataTableColumns = [
+    {
+      title: 'UUID',
+      key: 'uuid',
+      fixed: 'left',
+      width: '180',
+      ellipsis: {
+        tooltip: true
+      }
+    },
     {
       title: '资产编号',
       key: 'serial',
       fixed: 'left',
-      width: '200'
+      width: '180',
+      ellipsis: {
+        tooltip: true
+      }
     },
     {
       title: '资产名称',
@@ -94,7 +122,7 @@
       }
     },
     {
-      title: '物联网卡/网络开户号',
+      title: '物联网卡 / 网络开户号',
       key: 'iotNetSerial',
       width: '200'
     },
@@ -121,6 +149,19 @@
     }
   })
 
+  const projectFilterOptions = ref(null)
+
+  const renderCell = (value: string | number) => {
+    if (!value) return h(NText, { depth: 3 }, { default: () => '-' })
+    return value
+  }
+
+  const handleProjectSelect = async (key: string) => {
+    await fetch({
+      name: key
+    })
+  }
+
   const handlePageChange = async (currentPage: number) => {
     loading.value = true
     pagination.page = currentPage
@@ -137,14 +178,28 @@
     }
   }
 
-  const fetch = async () => {
+  type queryData = {
+    name: string
+  }
+
+  const fetch = async (query = {} as queryData) => {
     const res = await getAssetList({
       page: pagination.page - 1,
-      pageSize: pagination.pageSize
+      pageSize: pagination.pageSize,
+      query
     })
     data.value = res.data.assets
     pagination.pageCount = Math.ceil(res.data.total / 10)
     pagination.itemCount = res.data.total
+    if (!projectFilterOptions.value) {
+      const projectListRes = await getProjectList({
+        page: 0,
+        pageSize: 20
+      })
+      projectFilterOptions.value = getTreeDataTable(
+        projectListRes.data.projects
+      )
+    }
     loading.value = false
   }
 
