@@ -8,6 +8,6 @@ const router = createRouter({
   scrollBehavior: () => ({ top: 0 })
 })
 
-useRouterGuard(router)
+// useRouterGuard(router)
 
 export default router

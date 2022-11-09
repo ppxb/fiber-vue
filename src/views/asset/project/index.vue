@@ -70,6 +70,7 @@
       pageSize: 20
     })
     data.value = getTreeDataTable(res.data.projects)
+    console.log(data.value)
     loading.value = false
   }
 

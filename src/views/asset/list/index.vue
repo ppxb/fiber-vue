@@ -3,16 +3,18 @@
     <n-space vertical :size="12">
       <n-space justify="space-between">
         <div>
-          <n-dropdown
-            :options="projectFilterOptions"
-            placement="bottom-start"
-            trigger="click"
-            label-field="name"
-            key-field="name"
-            @select="handleProjectSelect"
-          >
-            <n-button>项目筛选</n-button>
-          </n-dropdown>
+          <n-form-item label="项目筛选" :show-feedback="false">
+            <n-tree-select
+              filterable
+              :options="projectFilterOptions"
+              v-model:value="filterProject"
+              label-field="name"
+              key-field="name"
+              placeholder="请选择项目"
+              @update:value="handleProjectFilter"
+              clearable
+            />
+          </n-form-item>
         </div>
         <n-space>
           <n-button @click="">添加资产</n-button>
@@ -41,13 +43,31 @@
 
 <script lang="ts" setup>
   import { h, onMounted, reactive, ref } from 'vue'
-  import { RowData } from 'naive-ui/es/data-table/src/interface'
   import ImportAssetsDrawer from './import-assets-drawer.vue'
   import { DataTableColumns, NText } from 'naive-ui'
-  import { getAssetList, getProjectList } from '@/api/asset'
+  import { getAssetList, getProjectList, getFilterAssetList } from '@/api/asset'
   import { getTreeDataTable } from '@/utils/form'
 
-  const columns: DataTableColumns = [
+  type RowData = {
+    uuid: string
+    serial: string
+    name: string
+    projectName: string
+    sonProjectName: string
+    partProjectName: string
+    type: string
+    kind: string
+    subDistrict: string
+    brand: string
+    specs: string
+    unit: string
+    value: number
+    address: string
+    iotNetSerial: string
+    emeterSerial: string
+  }
+
+  const columns: DataTableColumns<RowData> = [
     {
       title: 'UUID',
       key: 'uuid',
@@ -133,12 +153,15 @@
   ]
 
   const showImport = ref(false)
-  const updateShowImport = () => (showImport.value = false)
+  const updateShowImport = async () => {
+    showImport.value = false
+    await fetch()
+  }
 
-  const data = ref([])
+  const data = ref<RowData[]>()
   const loading = ref(true)
   const showDetail = ref(false)
-  const selectItem = ref<RowData>({})
+  const selectItem = ref<RowData>()
   const pagination = reactive({
     page: 1,
     pageCount: 1,
@@ -149,17 +172,21 @@
     }
   })
 
+  const savedProjects = ref()
   const projectFilterOptions = ref(null)
+  const filterProject = ref()
+
+  const handleProjectFilter = async (v: any) => {
+    const p = savedProjects.value.find((item: any) => item.name == v)
+    await fetch({
+      name: p.name,
+      level: p.level
+    })
+  }
 
   const renderCell = (value: string | number) => {
     if (!value) return h(NText, { depth: 3 }, { default: () => '-' })
     return value
-  }
-
-  const handleProjectSelect = async (key: string) => {
-    await fetch({
-      name: key
-    })
   }
 
   const handlePageChange = async (currentPage: number) => {
@@ -178,16 +205,20 @@
     }
   }
 
-  type queryData = {
-    name: string
-  }
-
-  const fetch = async (query = {} as queryData) => {
-    const res = await getAssetList({
-      page: pagination.page - 1,
-      pageSize: pagination.pageSize,
-      query
-    })
+  const fetch = async (query = {}) => {
+    let res
+    if (filterProject.value) {
+      res = await getFilterAssetList({
+        page: pagination.page - 1,
+        pageSize: pagination.pageSize,
+        ...query
+      })
+    } else {
+      res = await getAssetList({
+        page: pagination.page - 1,
+        pageSize: pagination.pageSize
+      })
+    }
     data.value = res.data.assets
     pagination.pageCount = Math.ceil(res.data.total / 10)
     pagination.itemCount = res.data.total
@@ -196,6 +227,7 @@
         page: 0,
         pageSize: 20
       })
+      savedProjects.value = projectListRes.data.projects
       projectFilterOptions.value = getTreeDataTable(
         projectListRes.data.projects
       )

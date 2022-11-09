@@ -5,6 +5,10 @@ import { listReq, projectReq } from './types'
 export const getAssetList = (data: listReq) =>
   axios.post('/api/asset/list', data)
 
+// get filter assets list
+export const getFilterAssetList = (data: listReq) =>
+  axios.post('/api/asset/flist', data)
+
 export const importAssets = (data: any, header: any) =>
   axios.post('/api/asset/import', data, header)
 

@@ -117,16 +117,17 @@
     try {
       setLoading(true)
       if (userLoginReq.mobile && userLoginReq.password != '') {
-        await userStore.login(userLoginReq)
+        // await userStore.login(userLoginReq)
         userStore.setUserMenuRoutes()
         await router.push({
           name: 'Dashboard'
         })
         // Message.success('登录成功')
       } else {
-        const userCheckedInfo = await check(userLoginReq.mobile)
-        userInfo.avatar = userCheckedInfo.data.userInfo.avatar
-        userInfo.name = userCheckedInfo.data.userInfo.name
+        // const userCheckedInfo = await check(userLoginReq.mobile)
+        // userInfo.avatar = userCheckedInfo.data.userInfo.avatar
+        // userInfo.name = userCheckedInfo.data.userInfo.name
+        userInfo.name = 'admin'
       }
       showLoginBtn.value = false
     } finally {

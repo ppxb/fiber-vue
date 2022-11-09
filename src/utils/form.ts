@@ -7,7 +7,6 @@ export const getTreeDataTable = (list: any) => {
     const tempList = JSON.parse(JSON.stringify(list))
     tempList.forEach((el: any) => {
       if (!el.parentProjectId) {
-        el.p = true
         root = el
         return
       }
@@ -22,7 +21,7 @@ export const getTreeDataTable = (list: any) => {
       parentEl.children = [...(parentEl.children || []), el]
     })
 
-    return tempList.filter((i: any) => i.p)
+    return tempList.filter((i: any) => i.level === 1)
   }
   return []
 }
