@@ -7,4 +7,5 @@ export type listReq = {
 export type projectReq = {
   name: string | null
   parentProjectId: string | null
+  level: number | null
 }

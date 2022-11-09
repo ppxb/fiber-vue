@@ -20,6 +20,15 @@
                 placeholder="请输入项目名称"
               />
             </n-form-item>
+
+            <n-form-item path="level" label="项目层级">
+              <n-select
+                v-model:value="modelRef.level"
+                :options="levelOptions"
+                placeholder="请选择项目层级"
+              />
+            </n-form-item>
+
             <n-form-item path="parent" label="上级项目" :show-feedback="false">
               <n-tree-select
                 v-model:value="modelRef.parentProjectId"
@@ -88,7 +97,8 @@
 
   const modelRef = reactive<projectReq>({
     name: null,
-    parentProjectId: null
+    parentProjectId: null,
+    level: null
   })
 
   const handleSubmit = async () => {
@@ -108,6 +118,12 @@
         required: true,
         message: '该项为必填项'
       }
+    ],
+    level: [
+      {
+        required: true,
+        message: '该项为必填'
+      }
     ]
   }
 
@@ -115,6 +131,21 @@
 
   const show = ref(props.show)
   const parentOptions = ref()
+
+  const levelOptions = [
+    {
+      label: '顶级项目',
+      value: 1
+    },
+    {
+      label: '子项目',
+      value: 2
+    },
+    {
+      label: '分部项目',
+      value: 3
+    }
+  ]
 
   const updateShow = () => {
     show.value = false
