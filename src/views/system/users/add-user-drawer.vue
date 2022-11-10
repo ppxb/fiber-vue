@@ -4,7 +4,7 @@
       <template #header>
         <div class="flex color-[#333] text-3xl font-700 mb-16">新增职员</div>
         <div class="color-[#666] text-4">
-          添加新职员至少需要设置基础信息，岗位和部门。
+          添加新职员至少需要设置基础信息，部门和岗位
         </div>
       </template>
       <n-collapse
@@ -14,7 +14,7 @@
         <n-form ref="formRef" :model="modelRef" :rules="rules" size="large">
           <n-collapse-item name="1">
             <template #header>
-              <div class="text-4 font-700">基本信息</div>
+              <div class="text-4 font-700">基础信息</div>
             </template>
 
             <n-form-item path="name" label="职员姓名">
@@ -44,7 +44,7 @@
           </n-collapse-item>
           <n-collapse-item name="2">
             <template #header>
-              <div class="text-4 font-700">部门岗位</div>
+              <div class="text-4 font-700">部门及岗位</div>
             </template>
             <n-form-item label="所属部门">
               <n-select

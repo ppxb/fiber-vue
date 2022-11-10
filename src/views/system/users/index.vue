@@ -21,7 +21,6 @@
 
 <script lang="ts" setup>
   import { onMounted, reactive, ref } from 'vue'
-  import { list } from '@/api/asset'
   import { RowData } from 'naive-ui/es/data-table/src/interface'
   import addUserDrawer from './add-user-drawer.vue'
 
@@ -90,22 +89,8 @@
 
   const handlePageChange = async (currentPage: number) => {
     loading.value = true
-    const res = await list({
-      page: currentPage
-    })
-    pagination.page = currentPage
-    data.value = res.data.list
     loading.value = false
   }
-
-  onMounted(async () => {
-    const res = await list({
-      page: 1
-    })
-    data.value = res.data.list
-    pagination.pageCount = res.data.total / 10
-    loading.value = false
-  })
 </script>
 
 <style>
