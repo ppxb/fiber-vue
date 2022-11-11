@@ -2,9 +2,9 @@
   <n-drawer v-model:show="show" :width="400" :on-update:show="updateShow">
     <n-drawer-content :header-style="headerStyle" :body-style="bodyStyle">
       <template #header>
-        <div class="flex color-[#333] text-3xl font-700 mb-16">新增职员</div>
+        <div class="flex color-[#333] text-3xl font-700 mb-16">新增用户</div>
         <div class="color-[#666] text-4">
-          添加新职员至少需要设置基础信息，部门和岗位
+          添加新用户至少需要设置基础信息，部门和岗位
         </div>
       </template>
       <n-collapse
@@ -17,10 +17,10 @@
               <div class="text-4 font-700">基础信息</div>
             </template>
 
-            <n-form-item path="name" label="职员姓名">
+            <n-form-item path="name" label="用户姓名">
               <n-input
                 v-model:value="modelRef.name"
-                placeholder="请输入职员的真实姓名"
+                placeholder="请输入用户的真实姓名"
               />
             </n-form-item>
             <n-form-item path="mobile" label="手机号码">
@@ -28,7 +28,7 @@
                 v-model:value="modelRef.mobile"
                 maxlength="11"
                 :allow-input="onlyAllowNumber"
-                placeholder="请输入员工的手机号码"
+                placeholder="请输入用户的手机号码"
               />
             </n-form-item>
             <n-form-item
@@ -39,7 +39,7 @@
               <n-input v-model:value="modelRef.email" disabled />
             </n-form-item>
             <div class="mt-2 color-[#666]">
-              电子邮箱、初始密码和头像由系统自动生成，可在职员登陆后自行修改。
+              电子邮箱、初始密码和头像由系统自动生成，可在用户登陆后自行修改。
             </div>
           </n-collapse-item>
           <n-collapse-item name="2">
@@ -50,14 +50,14 @@
               <n-select
                 v-model:value="modelRef.deptId"
                 :options="deptOptions"
-                placeholder="请选择职员所在部门"
+                placeholder="请选择用户所在部门"
               />
             </n-form-item>
-            <n-form-item label="职员岗位" v-if="modelRef.deptId">
+            <n-form-item label="用户岗位" v-if="modelRef.deptId">
               <n-select
                 v-model:value="modelRef.roleId"
                 :options="roleOptions"
-                placeholder="请选择职员的岗位"
+                placeholder="请选择用户的岗位"
               />
             </n-form-item>
           </n-collapse-item>

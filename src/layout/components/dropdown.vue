@@ -5,7 +5,7 @@
         round
         :size="32"
         object-fit="cover"
-        src="https://s1.ax1x.com/2022/07/05/jtMjGq.jpg"
+        src="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Finews.gtimg.com%2Fnewsapp_bt%2F0%2F12917180531%2F1000&refer=http%3A%2F%2Finews.gtimg.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1670720997&t=a1f131da91563743d98172024dff959b"
       />
     </n-el>
   </n-dropdown>

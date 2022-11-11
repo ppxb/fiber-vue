@@ -16,7 +16,7 @@ const systemRoutes: RouteRecordRaw[] = [
         name: 'Users',
         component: () => import('@/views/system/users/index.vue'),
         meta: {
-          title: '职员'
+          title: '用户'
         }
       },
       {
@@ -33,6 +33,22 @@ const systemRoutes: RouteRecordRaw[] = [
         component: () => import('@/views/asset/check/index.vue'),
         meta: {
           title: '角色配置'
+        }
+      },
+      {
+        path: 'role',
+        name: 'Role',
+        component: () => import('@/views/asset/check/index.vue'),
+        meta: {
+          title: '字典配置'
+        }
+      },
+      {
+        path: 'role',
+        name: 'Role',
+        component: () => import('@/views/asset/check/index.vue'),
+        meta: {
+          title: '服务状态'
         }
       }
     ]

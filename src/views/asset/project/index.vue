@@ -51,6 +51,10 @@
       key: 'uuid'
     },
     {
+      title: '项目成员',
+      key: 'users'
+    },
+    {
       title: '创建时间',
       key: 'createdAt'
     }

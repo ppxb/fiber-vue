@@ -17,7 +17,7 @@ const dashboardRoutes: RouteRecordRaw[] = [
         name: 'Workspace',
         component: () => import('@/views/dashboard/workspace/index.vue'),
         meta: {
-          title: '工作空间'
+          title: '分析'
         }
       }
     ]
